@@ -44,25 +44,11 @@ public class Interdit {
 	}
 	
 	public String ignore(String value){
-		if((value.contains("<"))){
-			value=value.replaceAll("<", "");
+		String[] stripChar={ ":", ";", ",", ".", "_", "^", "~", "(", ")", "[", "]", "?", "|", ">", "<", "!", "{","}" , "*","&","+","`","#","="};
+		for(String string:stripChar){
+			value=value.replace(string, "");
+			
 		}
-		if(value.contains(">")){
-			value=value.replaceAll(">", "");
-		}
-		if(value.contains("[")||value.contains("]")){
-			value=value.replaceAll("[^\\w]", "");
-		}
-		if(value.contains(".")){
-			value=value.replaceAll(".", "");
-		}
-		if(value.contains(":")){
-			value=value.replaceAll(":", "");
-		}
-		if(value.contains("?")){
-		//	value=value.replaceAll("?", "");
-		}
-		String[] stripChar={"<",">","[","]",".","?",":"};
 		
 		return value;
 	}
