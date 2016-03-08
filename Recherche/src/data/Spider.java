@@ -104,7 +104,7 @@ public class Spider {
 				String Currentword = recherche.getCurrentWord();
 				recherche.erase();
 				CreateDescriptor uniqDescriptor = new CreateDescriptor(Currentword);
-				uniqDescriptor.addSite(url);
+				uniqDescriptor.addSite(currentUrl);
 				pagesVisited.add(currentUrl);
 				this.pagesToVisit.addAll(leg.getLinks());
 				index.inserDescriptor(uniqDescriptor);

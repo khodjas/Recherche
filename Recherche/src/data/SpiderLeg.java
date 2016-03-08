@@ -11,8 +11,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class SpiderLeg {
-
-	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
+	
+	String user_agent="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
+	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36";
 	private List<String> links = new LinkedList<String>();
 	private Document htmlDocument;
 
@@ -27,7 +28,7 @@ public class SpiderLeg {
 			this.htmlDocument = htmlDocument;
 			if (connection.response().statusCode() == 200) {
 				System.out
-						.println("\n **Visiting** Received web page at" + url);
+						.println("\n **Visiting** Received web page at " + url);
 			}
 			if (!connection.response().contentType().contains("text/html")) {
 				System.out

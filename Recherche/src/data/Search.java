@@ -29,8 +29,11 @@ public class Search {
 		return words;
 	}
 
-	public boolean addWord(String word) {
+	public boolean addWord(String word) throws NullPointerException{
 		word = interdit.ignore(word);
+		if(word.isEmpty()){
+			throw new NullPointerException();
+		}
 		if (interdit.verify(word) == false) {
 
 			// si c'est le premier mot

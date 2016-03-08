@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class CreateIndex extends Index {
 
-
 	public CreateIndex() {
 		super();
 	}
@@ -22,22 +21,25 @@ public class CreateIndex extends Index {
 
 	// ajout d'un descripteur si il n'éxiste pas, d'un site sinon
 	public void inserDescriptor(CreateDescriptor buffer) throws ValidException {
+		if (getDescriptors().isEmpty()) {
+			getDescriptors().add(buffer);
+		} else {
+			for (int index = 0; index < getDescriptors().size(); index++) {
+				if (getDescriptors().get(index).compare(buffer)) {
+					getDescriptors().get(index).addSite(buffer.getUniqSite());
+					throw new ValidException();
+				}
 
-		for (int index = 0; index < getDescriptors().size(); index++) {
-			if (getDescriptors().get(index).compare(buffer)) {
-				getDescriptors().get(index).addSite(buffer.getUniqSite());
-				throw new ValidException();
 			}
-
+			getDescriptors().add(buffer);
 		}
-		getDescriptors().add(buffer);
 	}
-	
+
 	public void save(String fileName) {
 		ObjectOutputStream stream;
 		try {
 			stream = new ObjectOutputStream(new FileOutputStream("fichier.ser"));
-			for (Descriptor descriptor: getDescriptors()) {
+			for (Descriptor descriptor : getDescriptors()) {
 				stream.writeObject(descriptor);
 			}
 			stream.close();
@@ -47,15 +49,14 @@ public class CreateIndex extends Index {
 			System.err.println(e.getMessage());
 		}
 	}
-	
-	
-	public static void main(String[] args){
-		CreateIndex index=new CreateIndex();
+
+	public static void main(String[] args) {
+		CreateIndex index = new CreateIndex();
 		index.load("");
-		
-		for(Descriptor descriptor:index.getDescriptors()){
+
+		for (Descriptor descriptor : index.getDescriptors()) {
 			descriptor.afficheSites();
-			
+
 		}
 	}
 
