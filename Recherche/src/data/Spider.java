@@ -1,7 +1,10 @@
 package data;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
@@ -41,8 +44,22 @@ public class Spider {
 		
 	}
 	
-	public void currentSearch() {
+	public void recursiveSearch() {
+		try {
+			String line;
+			BufferedReader bReader = new BufferedReader(new FileReader("sites.txt"));
+			while ((line = bReader.readLine()) != null) {
+				search(line);
+			}
+			bReader.close();
 
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
+		}
 	}
 	
 	
@@ -114,7 +131,7 @@ public class Spider {
 		System.out.println();
 		System.out.println();
 		index.save("");
-		
+		pagesVisited.clear();
 	}
 
 	/**
@@ -132,5 +149,9 @@ public class Spider {
 		pagesToVisit.add(nextUrl);
 		return nextUrl;
 	}
-
+	
+	public static void main(String[] args){
+		Spider spider=new Spider();
+		spider.recursiveSearch();
+	}
 }
