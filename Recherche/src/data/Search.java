@@ -102,16 +102,4 @@ public class Search {
 		}
 	}
 
-	public static void main(String args[]) {
-		Search rechercher = new Search("test.txt");
-		rechercher.addText();
-		String motRecurrent;
-		try {
-			motRecurrent = rechercher.getCurrentWord();
-			System.out.println(motRecurrent);
-		} catch (NoElementListException e) {
-			System.err.println(e.getMessage());
-		}
-		
-	}
 }

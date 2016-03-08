@@ -62,6 +62,7 @@ public class Interdit {
 		if(value.contains("?")){
 		//	value=value.replaceAll("?", "");
 		}
+		String[] stripChar={"<",">","[","]",".","?",":"};
 		
 		return value;
 	}

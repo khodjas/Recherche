@@ -1,28 +1,14 @@
 package data;
 
-public class CreateDescriptor extends Descriptor {
+public class CreateDescriptor extends Descriptor{
 
-	public CreateDescriptor() {
-		super();
+
+	public CreateDescriptor(String keyword){
+		super(keyword);
 	}
-
-	/**
-	 * va permettre d'ajouter un KeyWord
-	 * 
-	 * @param keyWord
-	 */
-	public void addKeyWord(KeyWord keyWord) {
-		super.getKeyWords().add(keyWord);
-	}
-
-	/**
-	 * va permettre d'ajouter un Site
-	 * 
-	 * @param site
-	 */
-
-	public void addSite(Site site) {
-		super.getSites().add(site);
+	
+	public String getUniqSite(){
+		return super.getSites().get(0);
 	}
 
 }

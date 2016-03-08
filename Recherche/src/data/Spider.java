@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -111,9 +110,9 @@ public class Spider {
 		}
 		System.out.println(String.format("**Done** Visited"
 				+ pagesVisited.size() + "web page(s)"));
-		for(Descriptor descriptor:index.getDescriptors()){
-			descriptor.afficheSites();
-		}
+		System.out.println();
+		System.out.println();
+		System.out.println();
 		index.save("");
 		
 	}

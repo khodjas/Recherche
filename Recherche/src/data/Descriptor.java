@@ -1,70 +1,47 @@
 package data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Descriptor {
-	private ArrayList<KeyWord> keywords;
-	private ArrayList<Site> sites;
+public class Descriptor implements Serializable{
+	private ArrayList<String> sites;
+	//l'élt keyword est la parite mère du descripteur
+		private String keyword;
 
-	public Descriptor() {
-		keywords = new ArrayList<KeyWord>();
-		sites = new ArrayList<Site>();
-	}
-
-
-	/**
-	 * vérifie si le word entrée est bien définie dans le descriptor
-	 * 
-	 * @param word
-	 */
-	public boolean containsWord(String word) {
-		KeyWord keyWord=new KeyWord(word);
-		return keywords.contains(keyWord);
-	}
-	
-	/**
-	 * 
-	 * @return la liste des sites du Descriptor
-	 */
-	public ArrayList<Site> getSites(){
-		return sites;
-	}
-	
-	public ArrayList<KeyWord> getKeyWords() {
-		return keywords;
-	}
-	
-	public static void main(String[] args){
-		CreateDescriptor descriptor=new CreateDescriptor();
-		descriptor.addKeyWord(new KeyWord("bonjour"));
-		descriptor.addKeyWord(new KeyWord("hello"));
-		descriptor.addKeyWord(new KeyWord("hola"));
-		descriptor.addKeyWord(new KeyWord(""));
+		public Descriptor(String keyword) {
+			sites = new ArrayList<String>();
+			this.keyword = keyword;
+			
+		}
 		
-		descriptor.addSite(new Site("www.sava.com"));
-		descriptor.addSite(new Site("www.heee.com"));
-		descriptor.addSite(new Site("www.haha.com"));
-		descriptor.addSite(new Site("www.non.com"));
-		
-		Descriptor descriptor2=descriptor;
-		ArrayList<Site> sites;
-		try{
-		if(descriptor2.containsWord("n")){
-		sites=descriptor2.getSites();
-		for(Site site :sites){
-			System.out.println(site.toString());
+		public void addSite(String site){
+	//on vérifie que le site n'est pas déjà éxistant		
+			if(!sites.contains(site)){
+				sites.add(site);
 			}
 		}
+		
+		public String getKeyword(){
+			return keyword;
 		}
-		catch(NullPointerException e){
-			System.err.println(e.getMessage());
+		public ArrayList<String> getSites(){
+			return sites;
+		}
+		
+		public boolean compare(Descriptor descriptor){
+			if(this.getKeyword().equals(descriptor.getKeyword())){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		
 		
-		
-	}
-
-
-	
-
+		public void afficheSites(){
+			System.out.println(keyword);
+			for(String site:sites){
+				System.out.println(site);
+			}
+		}
 }
