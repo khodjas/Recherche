@@ -83,7 +83,7 @@ class Interface extends JFrame {
 
 		// spider.search(url);
 		searchSite = new SearchSite();
-		frameResult.setSize(300, 300);
+		frameResult.setSize(700, 600);
 		setSize(600, 200);
 		// champMot.setSize(30, 50);
 		setLocationRelativeTo(null);
@@ -110,22 +110,21 @@ class Interface extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (champMot.getText().equals("")) {
-				System.out.println("aucun message entrer");
+				informations.setText("aucun message entrer");
 			} else {
+				try{
 				searchSite.Search(champMot.getText());
-
 				
-			}
 
 			JPanel tmpPanel = new JPanel();
 
-			final JEditorPane jep = new JEditorPane("text/html", listUrls());
+			 JEditorPane jep = new JEditorPane("text/html", listUrls());
 			jep.setOpaque(false);
 			jep.addHyperlinkListener(new HyperlinkListener() {
-				public void hyperlinkUpdate(HyperlinkEvent hle) {
-					if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {
-						if (hle.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-							URL url = hle.getURL();
+				public void hyperlinkUpdate(HyperlinkEvent hyperLink) {
+					if (HyperlinkEvent.EventType.ACTIVATED.equals(hyperLink.getEventType())) {
+						if (hyperLink.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+							URL url = hyperLink.getURL();
 							link(url);
 						}
 					}
@@ -137,7 +136,12 @@ class Interface extends JFrame {
 
 			frameResult.add(tmpPanel);
 			frameResult.setVisible(true);
-			
+				}
+				catch(NullPointerException npe){
+					informations.setText("aucun résultat");
+				}
+				
+			}	
 		}
 
 	}
