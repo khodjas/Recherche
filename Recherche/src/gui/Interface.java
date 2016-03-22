@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +19,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -71,7 +73,7 @@ class Interface extends JFrame {
 	
 	public String listUrls(){
 		ArrayList<String> sites = searchSite.getResult();
-		String list="";
+		String list="le nombre de page résultant est "+sites.size()+"<br />";
 		for(String site:sites){
 		 list+=("<a href= \""+site+"\">"+site+"</a>");
 		 list+="<br />";
@@ -83,7 +85,7 @@ class Interface extends JFrame {
 
 		// spider.search(url);
 		searchSite = new SearchSite();
-		frameResult.setSize(700, 600);
+		//frameResult.setSize(50, 50);
 		setSize(600, 200);
 		// champMot.setSize(30, 50);
 		setLocationRelativeTo(null);
@@ -110,7 +112,7 @@ class Interface extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (champMot.getText().equals("")) {
-				informations.setText("aucun message entrer");
+				informations.setText("aucune requête entrer");
 			} else {
 				try{
 				searchSite.Search(champMot.getText());
@@ -133,6 +135,11 @@ class Interface extends JFrame {
 			jep.setEditable(false);
 
 			tmpPanel.add(jep);
+			JScrollPane editorScrollPane = new JScrollPane(tmpPanel);
+			editorScrollPane.setVerticalScrollBarPolicy(
+			                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			editorScrollPane.setPreferredSize(new Dimension(100, 100));
+			editorScrollPane.setMinimumSize(new Dimension(10, 10));
 
 			frameResult.add(tmpPanel);
 			frameResult.setVisible(true);

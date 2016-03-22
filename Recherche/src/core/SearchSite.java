@@ -27,14 +27,22 @@ public class SearchSite {
 		if (!getResult().isEmpty()) {
 			setResult(new ArrayList<String>());
 		}
+		request=request.replaceAll("( ) *", " ");
 		String[] keywords = request.split(" ");
 		for (int indexNum = 0; indexNum < keywords.length; indexNum++) {
+			try{
 				ArrayList<String> tmp = index.getSpecificDescriptor(keywords[indexNum]).getSites();
+			
 				for (String site : tmp) {
 					getResult().add(site);
 				}
+				}catch(NullPointerException npe){
+					System.err.println("aucun site concernant le mot "+keywords[indexNum]);
+				}
+			if(getResult().isEmpty()){
+				throw new NullPointerException();
+			}
 			
-			throw new NullPointerException();
 		}
 	}
 
