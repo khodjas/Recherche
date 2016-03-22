@@ -17,7 +17,9 @@ import data.CreateDescriptor;
 import data.CreateIndex;
 import data.NoElementListException;
 import data.Search;
+import data.Site;
 import data.ValidException;
+import data.Word;
 
 public class Spider {
 
@@ -108,10 +110,11 @@ public class Spider {
 				save(list);
 				recherche.addText();
 				eraseFile();
-				String Currentword = recherche.getCurrentWord();
+				Word currentWord = recherche.getCurrentWord();
 				recherche.erase();
-				CreateDescriptor uniqDescriptor = new CreateDescriptor(Currentword);
-				uniqDescriptor.addSite(currentUrl);
+				CreateDescriptor uniqDescriptor = new CreateDescriptor(currentWord.getValue());
+				Site site=new Site(currentUrl,currentWord);
+				uniqDescriptor.addSite(site);
 				pagesVisited.add(currentUrl);
 				pagesToVisit.addAll(leg.getLinks());
 				//this.pagesToVisit.addAll(leg.getLinks());
@@ -138,7 +141,7 @@ public class Spider {
 		System.out.println();
 		System.out.println();
 		System.out.println();
-		index.save("");
+		index.save("fichier.ser");
 		pagesVisited.clear();
 		System.out.println(index.getDescriptors().size());
 	}
@@ -161,6 +164,6 @@ public class Spider {
 	
 	public static void main(String[] args){
 		Spider spider=new Spider();
-		spider.recursiveSearch();
+		spider.search("http://google.com/");
 	}
 }

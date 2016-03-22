@@ -1,10 +1,8 @@
 package data;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
@@ -38,7 +36,7 @@ public class CreateIndex extends Index {
 	public void save(String fileName) {
 		ObjectOutputStream stream;
 		try {
-			stream = new ObjectOutputStream(new FileOutputStream("fichier.ser"));
+			stream = new ObjectOutputStream(new FileOutputStream(fileName));
 			for (Descriptor descriptor : getDescriptors()) {
 				stream.writeObject(descriptor);
 			}
@@ -51,13 +49,7 @@ public class CreateIndex extends Index {
 	}
 
 	public static void main(String[] args) {
-		CreateIndex index = new CreateIndex();
-		index.load("");
-
-		for (Descriptor descriptor : index.getDescriptors()) {
-			descriptor.afficheSites();
-
-		}
+		
 	}
 
 }

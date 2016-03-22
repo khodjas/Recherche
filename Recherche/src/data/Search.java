@@ -62,16 +62,20 @@ public class Search {
 		return false;
 	}
 
-	public void addText() {
+	public void addText(){
 		String line;
 		try {
 			BufferedReader bReader = new BufferedReader(new FileReader(file));
 			while ((line = bReader.readLine()) != null) {
+				try{
 				addWord(line);
+				}catch(NullPointerException npe){
+					
+				}
 			}
 			bReader.close();
 
-		} catch (FileNotFoundException e) {
+		}catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.err.println(e.getMessage());
 		} catch (IOException e) {
@@ -80,7 +84,7 @@ public class Search {
 		}
 	}
 
-	public String getCurrentWord() throws NoElementListException {
+	public Word getCurrentWord() throws NoElementListException {
 		Word motRecurrent = null;
 		ArrayList<Word> words;
 			words = getWords();
@@ -93,7 +97,7 @@ public class Search {
 				}
 			}
 		
-		return motRecurrent.getValue();
+		return motRecurrent;
 	}
 
 	public void erase() {

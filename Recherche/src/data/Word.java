@@ -1,6 +1,8 @@
 package data;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable{
 	private int occurence;
 	private String value;
 
@@ -22,8 +24,7 @@ public class Word {
 	}
 
 	public String toString() {
-		return "word: " + getValue() + " number of occurence: "
-				+ getOccurence();
+		return "word: " + getValue() + " number of occurence: " + getOccurence();
 	}
 
 	@Override

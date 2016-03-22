@@ -83,9 +83,9 @@ class Interface extends JFrame {
 
 	public void init() {
 
-		// spider.search(url);
+		//spider.search(url);
 		searchSite = new SearchSite();
-		//frameResult.setSize(50, 50);
+		frameResult.setSize(500, 250);
 		setSize(600, 200);
 		// champMot.setSize(30, 50);
 		setLocationRelativeTo(null);
@@ -115,7 +115,7 @@ class Interface extends JFrame {
 				informations.setText("aucune requête entrer");
 			} else {
 				try{
-				searchSite.Search(champMot.getText());
+				searchSite.search(champMot.getText());
 				
 
 			JPanel tmpPanel = new JPanel();

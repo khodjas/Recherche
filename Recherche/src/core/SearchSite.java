@@ -3,9 +3,10 @@ package core;
 import java.util.ArrayList;
 
 import data.Index;
+import data.Site;
 
 public class SearchSite {
-	private final String fileName = "";
+	private final String fileName = "fichier.ser";
 	private ArrayList<String> result;
 	private Index index;
 
@@ -23,7 +24,7 @@ public class SearchSite {
 		return result;
 	}
 
-	public void Search(String request) throws NullPointerException{
+	public void search(String request) throws NullPointerException{
 		if (!getResult().isEmpty()) {
 			setResult(new ArrayList<String>());
 		}
@@ -31,10 +32,10 @@ public class SearchSite {
 		String[] keywords = request.split(" ");
 		for (int indexNum = 0; indexNum < keywords.length; indexNum++) {
 			try{
-				ArrayList<String> tmp = index.getSpecificDescriptor(keywords[indexNum]).getSites();
+				ArrayList<Site> tmp = index.getSpecificDescriptor(keywords[indexNum]).getSites();
 			
-				for (String site : tmp) {
-					getResult().add(site);
+				for (Site site : tmp) {
+					getResult().add(site.getUrl());
 				}
 				}catch(NullPointerException npe){
 					System.err.println("aucun site concernant le mot "+keywords[indexNum]);
@@ -48,7 +49,7 @@ public class SearchSite {
 
 	public static void main(String[] args) {
 		SearchSite search = new SearchSite();
-		search.Search("googl");
+		search.search("google");
 		for (String string : search.getResult()) {
 			System.out.println(string);
 		}

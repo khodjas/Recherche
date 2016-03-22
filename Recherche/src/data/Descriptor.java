@@ -4,17 +4,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Descriptor implements Serializable{
-	private ArrayList<String> sites;
+	
+	/**
+	 * 
+	 */
+	private ArrayList<Site> sites;
 	//l'élt keyword est la parite mère du descripteur
 		private String keyword;
 
 		public Descriptor(String keyword) {
-			sites = new ArrayList<String>();
+			sites = new ArrayList<Site>();
 			this.keyword = keyword;
 			
 		}
 		
-		public void addSite(String site){
+		public void addSite(Site site){
 	//on vérifie que le site n'est pas déjà éxistant		
 			if(!sites.contains(site)){
 				sites.add(site);
@@ -24,7 +28,7 @@ public class Descriptor implements Serializable{
 		public String getKeyword(){
 			return keyword;
 		}
-		public ArrayList<String> getSites(){
+		public ArrayList<Site> getSites(){
 			return sites;
 		}
 		
@@ -40,8 +44,8 @@ public class Descriptor implements Serializable{
 		
 		public void afficheSites(){
 			System.out.println(keyword);
-			for(String site:sites){
-				System.out.println(site);
+			for(Site site:sites){
+				System.out.println(site.getUrl());
 			}
 		}
 }
