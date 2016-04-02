@@ -2,13 +2,17 @@ package core;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import data.Index;
 import data.Site;
+import log.LoggerUtility;
 
 public class SearchSite {
 	private final String fileName = "fichier.ser";
 	private ArrayList<String> result;
 	private Index index;
+	private static Logger logger=LoggerUtility.getLogger(SearchSite.class);
 
 	public SearchSite() {
 		index = new Index();
@@ -38,7 +42,7 @@ public class SearchSite {
 					getResult().add(site.getUrl());
 				}
 				}catch(NullPointerException npe){
-					System.err.println("aucun site concernant le mot "+keywords[indexNum]);
+					logger.warn("aucun site concernant le mot "+keywords[indexNum]);
 				}
 			if(getResult().isEmpty()){
 				throw new NullPointerException();

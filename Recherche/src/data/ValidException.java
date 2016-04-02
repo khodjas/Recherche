@@ -3,6 +3,6 @@ package data;
 public class ValidException extends Exception {
 	@Override
 	public String getMessage() {
-		return ("le site vient d'être ajouter");
+		return ("le mot éxiste et le site vient d'être ajouter");
 	}
 }

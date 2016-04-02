@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import data.CrawlException;
 import data.CreateDescriptor;
 import data.CreateIndex;
@@ -20,6 +22,7 @@ import data.Search;
 import data.Site;
 import data.ValidException;
 import data.Word;
+import log.LoggerUtility;
 
 public class Spider {
 
@@ -29,6 +32,8 @@ public class Spider {
 	private List<String> pagesToVisit = new LinkedList<String>();
 	private Search recherche;
 	private CreateIndex index;
+	
+	private static Logger logger = LoggerUtility.getLogger(Spider.class);
 
 	public Spider() {
 		recherche = new Search("testSite.txt");
@@ -86,6 +91,7 @@ public class Spider {
 	 *            - The word of string that you are searching for
 	 */
 	public void search(String url) {
+		index.addDictonnary("dictionnaire.txt");
 		while (pagesVisited.size() < MAX_PAGES_TO_SEARCH) {
 
 			String currentUrl;
@@ -112,38 +118,34 @@ public class Spider {
 				eraseFile();
 				Word currentWord = recherche.getCurrentWord();
 				recherche.erase();
-				CreateDescriptor uniqDescriptor = new CreateDescriptor(currentWord.getValue());
+				CreateDescriptor uniqDescriptor = new CreateDescriptor(currentWord);
 				Site site=new Site(currentUrl,currentWord);
 				uniqDescriptor.addSite(site);
 				pagesVisited.add(currentUrl);
 				pagesToVisit.addAll(leg.getLinks());
-				//this.pagesToVisit.addAll(leg.getLinks());
 				index.inserDescriptor(uniqDescriptor);
 				
 				
 
 			}catch (NoElementListException nele){
-				System.out.println(nele.getMessage());
+				logger.error(nele.getMessage());
 			}catch (CrawlException ce) {
-				System.out.println(ce.getMessage());
+				logger.error(ce.getMessage());
 			} catch (ValidException ve) {
 				// TODO Auto-generated catch block
-				System.err.println(ve.getMessage());
+				logger.info(ve.getMessage());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				System.err.println(e.getMessage());
+				logger.fatal(e.getMessage());
 			}
 
 			
 		}
-		System.out.println(String.format("**Done** Visited"
-				+ pagesVisited.size() + "web page(s)"));
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		logger.info("fin de la visite nombre de page résultant \n"+pagesVisited.size());
+//		System.out.println("**Done** Visited"
+//				+ pagesVisited.size() + "web page(s)");
 		index.save("fichier.ser");
 		pagesVisited.clear();
-		System.out.println(index.getDescriptors().size());
 	}
 
 	/**

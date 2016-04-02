@@ -7,7 +7,7 @@ public class CreateDescriptor extends Descriptor{
 	 * 
 	 */
 
-	public CreateDescriptor(String keyword){
+	public CreateDescriptor(Word keyword){
 		super(keyword);
 	}
 	

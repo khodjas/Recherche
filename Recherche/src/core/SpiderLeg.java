@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import data.CrawlException;
+import log.LoggerUtility;
 
 public class SpiderLeg {
 	
@@ -18,7 +20,8 @@ public class SpiderLeg {
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36";
 	private List<String> links = new LinkedList<String>();
 	private Document htmlDocument;
-
+	
+	private static Logger logger = LoggerUtility.getLogger(SpiderLeg.class);
 	/**
 	 * 
 	 * @param url
@@ -29,29 +32,33 @@ public class SpiderLeg {
 			Document htmlDocument = connection.get();
 			this.htmlDocument = htmlDocument;
 			if (connection.response().statusCode() == 200) {
-				System.out
-						.println("\n **Visiting** Received web page at " + url);
+				logger.info("Page web à vister: "+url+" ");
+//				System.out
+//						.println("\n **Visiting** Received web page at " + url);
 			}
 			if (!connection.response().contentType().contains("text/html")) {
-				System.out
-						.println("**Failure** Retrieved something other than HTML");
+				logger.warn("Echec la page récupérer non HTML");
+//				System.out
+//						.println("**Failure** Retrieved something other than HTML");
 				throw new CrawlException();
 			}
 
 			Elements linksOnPage = htmlDocument.select("a[href]");
-			System.out.println("Found (" + linksOnPage.size() + ") links");
+			logger.info(" urls interne trouvé : "+linksOnPage.size()+" ");
+//			System.out.println("Found (" + linksOnPage.size() + ") links");
 
 			for (Element link : linksOnPage) {
 				this.links.add(link.absUrl("href"));
 			}
 			return true;
-		} catch (IOException ioe) {
+		}catch(IllegalArgumentException iae){
+			logger.error("url:"+url+" non valide");
+//			System.err.println(iae.getMessage()+"url non valide");
+			return false;
+		}catch (IOException ioe) {
 			return false;
 		}
-		catch(IllegalArgumentException iae){
-			System.err.println(iae.getMessage()+"url non valide");
-			return false;
-		}
+		
 
 	}
 

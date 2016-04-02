@@ -10,9 +10,9 @@ public class Descriptor implements Serializable{
 	 */
 	private ArrayList<Site> sites;
 	//l'élt keyword est la parite mère du descripteur
-		private String keyword;
+		private Word keyword;
 
-		public Descriptor(String keyword) {
+		public Descriptor(Word keyword) {
 			sites = new ArrayList<Site>();
 			this.keyword = keyword;
 			
@@ -25,7 +25,7 @@ public class Descriptor implements Serializable{
 			}
 		}
 		
-		public String getKeyword(){
+		public Word getKeyword(){
 			return keyword;
 		}
 		public ArrayList<Site> getSites(){
@@ -39,6 +39,11 @@ public class Descriptor implements Serializable{
 			else{
 				return false;
 			}
+		}
+		
+		public boolean compareByFamily(){
+			
+			return true;
 		}
 		
 		

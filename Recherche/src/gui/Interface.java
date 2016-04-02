@@ -30,7 +30,6 @@ import core.Spider;
 class Interface extends JFrame {
 	private SearchSite searchSite;
 	private Spider spider;
-	private static final String url = "http://google.com/";
 	private static final File file = new File("sites.txt");
 
 	private JLabel rechercheMot = new JLabel("mot");
@@ -83,7 +82,7 @@ class Interface extends JFrame {
 
 	public void init() {
 
-		//spider.search(url);
+		spider.recursiveSearch();
 		searchSite = new SearchSite();
 		frameResult.setSize(500, 250);
 		setSize(600, 200);

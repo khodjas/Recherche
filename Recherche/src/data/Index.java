@@ -17,7 +17,8 @@ public class Index {
 	}
 
 	public Descriptor getSpecificDescriptor(String keyword) throws NullPointerException {
-		Descriptor descriptor2 = new Descriptor(keyword);
+		Word word=new Word(keyword);
+		Descriptor descriptor2 = new Descriptor(word);
 		for (int index = 0; index < descriptors.size(); index++) {
 			if (descriptors.get(index).compare(descriptor2)) {
 
@@ -31,7 +32,7 @@ public class Index {
 	public void load(String fileName) {
 		ObjectInputStream stream;
 		try {
-			stream = new ObjectInputStream(new FileInputStream("fichier.ser"));
+			stream = new ObjectInputStream(new FileInputStream(fileName));
 			Descriptor descriptor;
 			while ((descriptor = (Descriptor) stream.readObject()) != null) {
 				descriptors.add(descriptor);
