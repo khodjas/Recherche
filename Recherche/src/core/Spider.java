@@ -27,12 +27,12 @@ import log.LoggerUtility;
 public class Spider {
 
 	private static final int MAX_PAGES_TO_SEARCH = 10;
-	private static final String filename="testSite.txt";
+	private static final String filename = "testSite.txt";
 	private Set<String> pagesVisited = new HashSet<String>();
 	private List<String> pagesToVisit = new LinkedList<String>();
 	private Search recherche;
 	private CreateIndex index;
-	
+
 	private static Logger logger = LoggerUtility.getLogger(Spider.class);
 
 	public Spider() {
@@ -49,16 +49,14 @@ public class Spider {
 		writer.close();
 	}
 
-	
-
-	
-	public void eraseFile(){
-		File file=new File(filename);
+	public void eraseFile() {
+		File file = new File(filename);
 		file.delete();
-		
+
 	}
-	
+
 	public void recursiveSearch() {
+		index.addDictonnary("dictionnaire.txt");
 		try {
 			String line;
 			BufferedReader bReader = new BufferedReader(new FileReader("sites.txt"));
@@ -75,13 +73,13 @@ public class Spider {
 			System.err.println(e.getMessage());
 		}
 	}
-	
-	
-//
-//concernant les probleme il y'en a un qui provient des exceptions ajouter une pour la méthode crawl 	
-//	
-//et aussi une mauvaise actualisation de la recherche de mots	 (RESOLUE)
-//	
+
+	//
+	// concernant les probleme il y'en a un qui provient des exceptions ajouter
+	// une pour la méthode crawl
+	//
+	// et aussi une mauvaise actualisation de la recherche de mots (RESOLUE)
+	//
 	/**
 	 * 
 	 * @param url
@@ -91,9 +89,9 @@ public class Spider {
 	 *            - The word of string that you are searching for
 	 */
 	public void search(String url) {
-		index.addDictonnary("dictionnaire.txt");
-		while (pagesVisited.size() < MAX_PAGES_TO_SEARCH) {
 
+		while (pagesVisited.size() < MAX_PAGES_TO_SEARCH) {
+			recherche.erase();
 			String currentUrl;
 			SpiderLeg leg = new SpiderLeg();
 
@@ -107,8 +105,6 @@ public class Spider {
 
 			}
 
-			
-
 			try {
 				leg.crawl(currentUrl);
 				String allWord = leg.foundWords();
@@ -116,20 +112,15 @@ public class Spider {
 				save(list);
 				recherche.addText();
 				eraseFile();
-				Word currentWord = recherche.getCurrentWord();
-				recherche.erase();
-				CreateDescriptor uniqDescriptor = new CreateDescriptor(currentWord);
-				Site site=new Site(currentUrl,currentWord);
-				uniqDescriptor.addSite(site);
 				pagesVisited.add(currentUrl);
 				pagesToVisit.addAll(leg.getLinks());
-				index.inserDescriptor(uniqDescriptor);
-				
+				indexation(currentUrl);
 				
 
-			}catch (NoElementListException nele){
+
+			} catch (NoElementListException nele) {
 				logger.error(nele.getMessage());
-			}catch (CrawlException ce) {
+			} catch (CrawlException ce) {
 				logger.error(ce.getMessage());
 			} catch (ValidException ve) {
 				// TODO Auto-generated catch block
@@ -139,13 +130,13 @@ public class Spider {
 				logger.fatal(e.getMessage());
 			}
 
-			
 		}
-		logger.info("fin de la visite nombre de page résultant \n"+pagesVisited.size());
-//		System.out.println("**Done** Visited"
-//				+ pagesVisited.size() + "web page(s)");
+		logger.info("fin de la visite nombre de page résultant \n" + pagesVisited.size());
+		// System.out.println("**Done** Visited"
+		// + pagesVisited.size() + "web page(s)");
 		index.save("fichier.ser");
 		pagesVisited.clear();
+		pagesToVisit.clear();
 	}
 
 	/**
@@ -163,9 +154,18 @@ public class Spider {
 		pagesToVisit.add(nextUrl);
 		return nextUrl;
 	}
-	
-	public static void main(String[] args){
-		Spider spider=new Spider();
+
+	public void indexation(String currentUrl) throws NoElementListException, ValidException {
+		Word currentWord = recherche.getCurrentWord();
+		CreateDescriptor uniqDescriptor = new CreateDescriptor(currentWord);
+		Site site = new Site(currentUrl, currentWord);
+		logger.info("Mot récurrent du site: " + currentWord);
+		uniqDescriptor.addSite(site);
+		index.inserDescriptor(uniqDescriptor);
+	}
+
+	public static void main(String[] args) {
+		Spider spider = new Spider();
 		spider.search("http://google.com/");
 	}
 }

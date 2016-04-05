@@ -39,7 +39,9 @@ public class SearchSite {
 				ArrayList<Site> tmp = index.getSpecificDescriptor(keywords[indexNum]).getSites();
 			
 				for (Site site : tmp) {
+					if(!getResult().contains(site.getUrl())){
 					getResult().add(site.getUrl());
+					}
 				}
 				}catch(NullPointerException npe){
 					logger.warn("aucun site concernant le mot "+keywords[indexNum]);

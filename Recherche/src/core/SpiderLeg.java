@@ -55,7 +55,8 @@ public class SpiderLeg {
 			logger.error("url:"+url+" non valide");
 //			System.err.println(iae.getMessage()+"url non valide");
 			return false;
-		}catch (IOException ioe) {
+		}
+		catch (IOException ioe) {
 			return false;
 		}
 		

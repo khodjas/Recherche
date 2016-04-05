@@ -11,10 +11,17 @@ import java.util.List;
 
 import javax.naming.event.NamingExceptionEvent;
 
+import org.apache.log4j.Logger;
+
+import core.SpiderLeg;
+import log.LoggerUtility;
+
 public class Search {
 	private File file;
 	private Interdit interdit;
 	private ArrayList<Word> words;
+	private static Logger logger = LoggerUtility.getLogger(SpiderLeg.class);
+
 
 	public Search(String filename) {
 		interdit = new Interdit();
@@ -105,7 +112,7 @@ public class Search {
 			getWords().clear();
 		} catch (NoElementListException e) {
 
-			System.err.println(e.getMessage());
+			logger.warn(e.getMessage());
 		}
 	}
 
