@@ -41,7 +41,7 @@ public class Interdit {
 	}
 	
 	public String ignore(String value){
-		String[] stripChar={ ":", ";", ",", ".", "_", "^", "~", "(", ")", "[", "]", "?", "|", ">", "<", "!", "{","}" , "*","&","+","`","#","="};
+		String[] stripChar={ ":", ";", ",", "-", ".", "_", "^", "~", "(", ")", "[", "]", "?", "|", ">", "<", "!", "{","}" , "*","&","+","`","#","="};
 		for(String string:stripChar){
 			value=value.replace(string, "");
 			

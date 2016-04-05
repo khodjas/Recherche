@@ -1,8 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -32,7 +32,7 @@ class Interface extends JFrame {
 	private Spider spider;
 	private static final File file = new File("sites.txt");
 
-	private JLabel rechercheMot = new JLabel("mot");
+	private JLabel rechercheMot = new JLabel("requête");
 	private JTextField champMot = new JTextField();
 	private JButton rechercheMotButton = new JButton("rechercher");
 	private JLabel informations = new JLabel();
@@ -48,34 +48,14 @@ class Interface extends JFrame {
 
 	}
 	
-	public void link(URL url) {
-		if (Desktop.isDesktopSupported()) {
-			Desktop desktop = Desktop.getDesktop();
-			if (desktop.isSupported(Desktop.Action.OPEN)) {
-				try {
-					try {
-						Desktop.getDesktop().browse(url.toURI());
-					} catch (URISyntaxException e1) {
-						System.err.println(e1.getMessage());
-					}
-				} catch (IOException ioe) {
-					// Traitement de l'exception
-				}
-			} else {
-				// La fonction n'est pas supportee par votre systeme
-				// d'exploitation
-			}
-		} else {
-			// Desktop pas supporte par votre systeme d'exploitation
-		}
-	}
 	
 	public String listUrls(){
 		ArrayList<String> sites = searchSite.getResult();
 		String list="le nombre de page résultant est "+sites.size()+"<br />";
 		for(String site:sites){
+			
 		 list+=("<a href= \""+site+"\">"+site+"</a>");
-		 list+="<br />";
+		 list+="<br /><br />";
 		}
 		return list;
 	}
@@ -84,22 +64,30 @@ class Interface extends JFrame {
 
 //		spider.recursiveSearch();
 		searchSite = new SearchSite();
-		frameResult.setSize(500, 250);
-		setSize(600, 200);
-		// champMot.setSize(30, 50);
+		frameResult.setSize(600, 500);
+		this.setSize(500, 100);
+		champMot.setSize(30, 50);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		JPanel b2 = new JPanel();
+		Font font = new Font("Arial",Font.BOLD,20);
+		rechercheMot.setFont(font);
+		rechercheMotButton.setFont(font);
+		informations.setFont(font);
+		
+		
+		JPanel panel = new JPanel();
 		BorderLayout layout = new BorderLayout();
 
-		b2.setLayout(layout);
-		b2.add(rechercheMot, layout.WEST);
-		b2.add(champMot, layout.CENTER);
-		b2.add(rechercheMotButton, layout.EAST);
-		b2.add(informations, layout.SOUTH);
+		
+		panel.setLayout(layout);
+		panel.add(rechercheMot, layout.WEST);
+		panel.add(champMot, layout.CENTER);
+		panel.add(rechercheMotButton, layout.EAST);
+		panel.add(informations, layout.SOUTH);
 
-		getContentPane().add(b2);
-
+		getContentPane().add(panel);
+		
+		setResizable(false);
 		setVisible(true);
 
 	}
@@ -125,8 +113,7 @@ class Interface extends JFrame {
 				public void hyperlinkUpdate(HyperlinkEvent hyperLink) {
 					if (HyperlinkEvent.EventType.ACTIVATED.equals(hyperLink.getEventType())) {
 						if (hyperLink.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-							URL url = hyperLink.getURL();
-							link(url);
+							
 						}
 					}
 				}
