@@ -1,5 +1,9 @@
 package data;
-
+/**
+ * 
+ * Classe permettant la création de Descriptor
+ *
+ */
 public class CreateDescriptor extends Descriptor{
 
 

@@ -1,14 +1,13 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
-
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,8 +23,11 @@ import javax.swing.JTextField;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
+import org.apache.log4j.Logger;
+
 import core.SearchSite;
 import core.Spider;
+import log.LoggerUtility;
 
 class Interface extends JFrame {
 	private SearchSite searchSite;
@@ -38,6 +40,8 @@ class Interface extends JFrame {
 	private JLabel informations = new JLabel();
 
 	private JFrame frameResult = new JFrame("Résultats");
+	
+	private static Logger logger=LoggerUtility.getLogger(SearchSite.class);
 
 	public Interface() {
 		super("Bingo!");
@@ -48,10 +52,32 @@ class Interface extends JFrame {
 
 	}
 	
+	public void link(URL url) {
+		if (Desktop.isDesktopSupported()) {
+			Desktop desktop = Desktop.getDesktop();
+			if (desktop.isSupported(Desktop.Action.OPEN)) {
+				try {
+					try {
+						Desktop.getDesktop().browse(url.toURI());
+					} catch (URISyntaxException e1) {
+						System.err.println(e1.getMessage());
+					}
+				} catch (IOException ioe) {
+					// Traitement de l'exception
+				}
+			} else {
+				// La fonction n'est pas supportee par votre systeme
+				// d'exploitation
+			}
+		} else {
+			// Desktop pas supporte par votre systeme d'exploitation
+		}
+	}
 	
 	public String listUrls(){
 		ArrayList<String> sites = searchSite.getResult();
 		String list="le nombre de page résultant est "+sites.size()+"<br />";
+		logger.info("nombre de page:"+sites.size());
 		for(String site:sites){
 			
 		 list+=("<a href= \""+site+"\">"+site+"</a>");
@@ -80,10 +106,10 @@ class Interface extends JFrame {
 
 		
 		panel.setLayout(layout);
-		panel.add(rechercheMot, layout.WEST);
-		panel.add(champMot, layout.CENTER);
-		panel.add(rechercheMotButton, layout.EAST);
-		panel.add(informations, layout.SOUTH);
+		panel.add(rechercheMot, BorderLayout.WEST);
+		panel.add(champMot, BorderLayout.CENTER);
+		panel.add(rechercheMotButton, BorderLayout.EAST);
+		panel.add(informations, BorderLayout.SOUTH);
 
 		getContentPane().add(panel);
 		
@@ -113,7 +139,8 @@ class Interface extends JFrame {
 				public void hyperlinkUpdate(HyperlinkEvent hyperLink) {
 					if (HyperlinkEvent.EventType.ACTIVATED.equals(hyperLink.getEventType())) {
 						if (hyperLink.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-							
+							URL url = hyperLink.getURL();
+							link(url);
 						}
 					}
 				}

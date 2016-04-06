@@ -35,7 +35,7 @@ public class SearchSite {
 		request=request.replaceAll("( ) *", " ");
 		String[] keywords = request.split(" ");
 		for (int indexNum = 0; indexNum < keywords.length; indexNum++) {
-			try{
+			//try{
 				ArrayList<Site> tmp = index.getSpecificDescriptor(keywords[indexNum]).getSites();
 			
 				for (Site site : tmp) {
@@ -43,9 +43,9 @@ public class SearchSite {
 					getResult().add(site.getUrl());
 					}
 				}
-				}catch(NullPointerException npe){
-					logger.warn("aucun site concernant le mot "+keywords[indexNum]);
-				}
+//				}catch(NullPointerException npe){
+//					logger.warn("aucun site concernant le mot "+keywords[indexNum]);
+//				}
 			if(getResult().isEmpty()){
 				throw new NullPointerException();
 			}

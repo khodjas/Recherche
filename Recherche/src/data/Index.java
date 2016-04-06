@@ -5,9 +5,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
+import core.SearchSite;
+import log.LoggerUtility;
+
 public class Index {
 	private ArrayList<Descriptor> descriptors;
 
+	private static Logger logger=LoggerUtility.getLogger(SearchSite.class);
+	
 	public Index() {
 		descriptors = new ArrayList<Descriptor>();
 	}
@@ -16,9 +23,10 @@ public class Index {
 		return descriptors;
 	}
 
-	public Descriptor getSpecificDescriptor(String keyword) throws NullPointerException {
+	public Descriptor getSpecificDescriptor(String keyword) {
 		Word word=new Word(keyword);
 		Descriptor descriptor2 = new Descriptor(word);
+		try{
 		for (int index = 0; index < descriptors.size(); index++) {
 			if (descriptors.get(index).compare(descriptor2)) {
 
@@ -26,7 +34,11 @@ public class Index {
 			}
 
 		}
-		throw new NullPointerException();
+		}catch(NullPointerException npe){
+			logger.warn("aucun site concernant le mot "+keyword);
+			
+		}
+		return descriptor2;
 	}
 
 	public void load(String fileName) {
