@@ -9,11 +9,13 @@
 7
 8
 9
+@
 à
 a
 dans
 de
 des
+du
 elle
 elles
 en
@@ -26,13 +28,16 @@ les
 leur
 leurs
 mais
+n°
 ne
 notre
 nous
 on
 ou
 où
+parce
 pas
+pour
 quand
 que
 qui
@@ -49,6 +54,7 @@ votre
 vous
 un
 une
+ ()*
 
 and
 are
