@@ -8,7 +8,7 @@ public class CrawlException extends Exception {
 	@Override
 	/**
 	 * méthode retournant le message d'erreur du parcours du robot.
-	 * @re
+	 * 
 	 */
 	public String getMessage() {
 		// TODO Auto-generated method stub

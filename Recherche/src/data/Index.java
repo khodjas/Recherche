@@ -7,26 +7,50 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import core.RecoveredSynonym;
 import core.SearchSite;
 import log.LoggerUtility;
 
+/**
+ * 
+ * Classe représentant l'index du moteur de recherche
+ * 
+ */
 public class Index {
+	/**
+	 * descriptors représentant la liste des descripteurs qui représenteront
+	 * l'ensemble de l'index
+	 */
 	private ArrayList<Descriptor> descriptors;
-
-	private static Logger logger=LoggerUtility.getLogger(SearchSite.class);
 	
+	private static Logger logger = LoggerUtility.getLogger(SearchSite.class);
+
+	/**
+	 *Constructeur 
+	 */
 	public Index() {
 		descriptors = new ArrayList<Descriptor>();
 	}
 
+	/**
+	 * 
+	 * @return descriptors
+	 * retourne la liste des descripteurs
+	 */
 	public ArrayList<Descriptor> getDescriptors() {
 		return descriptors;
 	}
 
+	/**
+	 * 
+	 * @param keyword représentant le mot-clé à retrouver dans l'un des descriptors
+	 * @return descriptor le descripteur spécifique
+	 * @throws NullPointerException si le descriptor n'existe pas
+	 */
 	public Descriptor getSpecificDescriptor(String keyword) {
-		Word word=new Word(keyword);
+		Word word = new Word(keyword);
 		Descriptor descriptor2 = new Descriptor(word);
-		try{
+
 		for (int index = 0; index < descriptors.size(); index++) {
 			if (descriptors.get(index).compare(descriptor2)) {
 
@@ -34,13 +58,36 @@ public class Index {
 			}
 
 		}
-		}catch(NullPointerException npe){
-			logger.warn("aucun site concernant le mot "+keyword);
-			
-		}
+		logger.warn("aucun site concernant le mot "+keyword);
 		return descriptor2;
-	}
 
+	}
+	
+	/**
+	 * 
+	 * @param keyword le mot synonyme
+	 * @return récupère le descripteur contenant le mot keyword
+	 * @throws NullPointerException si le descripteur n'éxiste pas
+	 */
+	public Descriptor getSynonymDescriptor(String keyword) throws NullPointerException{
+		
+		Word word =new Word(keyword);
+		Descriptor descriptor= new Descriptor(word);
+		for(int index = 0; index < descriptors.size(); index++){
+			if (RecoveredSynonym.synonymExist(descriptors.get(index),descriptor)) {
+				logger.info("Descripteur synonymes résultant: "+descriptors.get(index).getKeyword());
+				return descriptors.get(index);
+			}
+		}
+		throw new NullPointerException();
+	}
+	
+	
+	/**
+	 * 
+	 * @param fileName correspondant au fichier.ser qui possède toute notre base
+	 * de données
+	 */
 	public void load(String fileName) {
 		ObjectInputStream stream;
 		try {
@@ -50,25 +97,15 @@ public class Index {
 				descriptors.add(descriptor);
 			}
 			stream.close();
+			logger.info("enregistrement terminé");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.err.println("l'enregistrement est terminé");
+			logger.warn("l'enregistrement vient de se terminer");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.err.println(e.getMessage());
+			logger.error("probleme d'objets sérialisé");
 		}
 
-	}
-
-	public static void main(String[] args) {
-		CreateIndex index = new CreateIndex();
-
-		index.load("fichier.ser");
-		System.out.println(index.getDescriptors().get(0).getSites().get(0).getUrl());
-		for (Descriptor descripto : index.getDescriptors()) {
-			System.out.println(descripto.getSites().get(0).getWord().getOccurence());
-
-		}
 	}
 
 }

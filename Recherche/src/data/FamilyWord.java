@@ -1,20 +1,41 @@
 package data;
 
-
 import java.util.ArrayList;
 
+/**
+ * 
+ * Classe fille de Word
+ */
 public class FamilyWord extends Word {
+	/**
+	 * liste des mots correspondant à la famille du mot clé
+	 */
 	private ArrayList<String> family;
 
+	/**
+	 * Constructeur
+	 * 
+	 * @param value
+	 *            Mot-clé principale du descriptor
+	 */
 	public FamilyWord(String value) {
 		super(value);
 		family = new ArrayList<String>();
 	}
 
+	/**
+	 * retourne l'ensemble des mots de la famille
+	 * 
+	 * @return family
+	 */
 	public ArrayList<String> getFamily() {
 		return family;
 	}
 
+	/**
+	 * amélioration du equals qui compare aussi si le mot-clef correspond à la
+	 * famille de mot
+	 */
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -22,8 +43,8 @@ public class FamilyWord extends Word {
 		if (obj == null) {
 			return false;
 		}
-		if ((getClass() != obj.getClass())){
-			if( getClass().getSuperclass() != obj.getClass()) {
+		if ((getClass() != obj.getClass())) {
+			if (getClass().getSuperclass() != obj.getClass()) {
 				return false;
 			}
 		}
@@ -38,6 +59,11 @@ public class FamilyWord extends Word {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param word
+	 *            mot à ajouter dans la family
+	 */
 	public void addWord(String word) {
 		getFamily().add(word);
 	}
@@ -50,11 +76,6 @@ public class FamilyWord extends Word {
 		}
 
 		return result;
-
-	}
-
-	public static void main(String[] args) {
-		
 
 	}
 

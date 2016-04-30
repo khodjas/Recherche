@@ -1,7 +1,11 @@
 package data;
 
 import java.io.Serializable;
-
+/**
+ * 
+ * Classe représentant un motclé dont sa valeur et son occurence
+ *
+ */
 public class Word implements Serializable{
 	private int occurence;
 	private String value;

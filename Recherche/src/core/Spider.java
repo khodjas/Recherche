@@ -26,8 +26,10 @@ import log.LoggerUtility;
 
 public class Spider {
 
-	private static final int MAX_PAGES_TO_SEARCH = 10;
-	private static final String filename = "testSite.txt";
+	private static final int MAX_PAGES_TO_SEARCH = 20;
+	private static final String FILENAME_LIST_SITES="sites.txt";
+	private static final String FILENAME_TEST_SITES= "testSite.txt";
+	private static final String FILENAME_INDEX = "fichier.ser";
 	private Set<String> pagesVisited = new HashSet<String>();
 	private List<String> pagesToVisit = new LinkedList<String>();
 	private Search recherche;
@@ -41,7 +43,7 @@ public class Spider {
 	}
 
 	public void save(String[] list) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME_TEST_SITES));
 		for (int index = 0; index < list.length; index++) {
 			writer.write(list[index]);
 			writer.newLine();
@@ -50,27 +52,29 @@ public class Spider {
 	}
 
 	public void eraseFile() {
-		File file = new File(filename);
+		File file = new File(FILENAME_TEST_SITES);
 		file.delete();
 
 	}
 
 	public void recursiveSearch() {
-		index.addDictonnary("dictionnaire.txt");
-		try {
-			String line;
-			BufferedReader bReader = new BufferedReader(new FileReader("sites.txt"));
-			while ((line = bReader.readLine()) != null) {
-				search(line);
-			}
-			bReader.close();
+		if (!(new File(FILENAME_INDEX).exists())) {
+			index.addDictonnary("dictionnaire.txt");
+			try {
+				String line;
+				BufferedReader bReader = new BufferedReader(new FileReader(FILENAME_LIST_SITES));
+				while ((line = bReader.readLine()) != null) {
+					search(line);
+				}
+				bReader.close();
 
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.err.println(e.getMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.err.println(e.getMessage());
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.getMessage());
+			}
 		}
 	}
 
@@ -115,8 +119,6 @@ public class Spider {
 				pagesVisited.add(currentUrl);
 				pagesToVisit.addAll(leg.getLinks());
 				indexation(currentUrl);
-				
-
 
 			} catch (NoElementListException nele) {
 				logger.error(nele.getMessage());
@@ -134,7 +136,7 @@ public class Spider {
 		logger.info("fin de la visite nombre de page résultant \n" + pagesVisited.size());
 		// System.out.println("**Done** Visited"
 		// + pagesVisited.size() + "web page(s)");
-		index.save("fichier.ser");
+		index.save(FILENAME_INDEX);
 		pagesVisited.clear();
 		pagesToVisit.clear();
 	}

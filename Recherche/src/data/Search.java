@@ -6,16 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.naming.event.NamingExceptionEvent;
 
 import org.apache.log4j.Logger;
 
 import core.SpiderLeg;
 import log.LoggerUtility;
-
+/**
+ * 
+ * Classe qui permettra de faire l'algorithme des mots les plus récurrents
+ *
+ */
 public class Search {
 	private File file;
 	private Interdit interdit;
@@ -35,7 +35,14 @@ public class Search {
 		}
 		return words;
 	}
-
+	/**
+	 * Entre les différents mot rencontré si le mot appartient deja
+	 * on augmente son occurrence
+	 * on l'ajoute sinon
+	 * @param word
+	 * @return
+	 * @throws NullPointerException
+	 */
 	public boolean addWord(String word) throws NullPointerException{
 		word = interdit.ignore(word);
 		if(word.isEmpty()){
@@ -68,7 +75,10 @@ public class Search {
 		}
 		return false;
 	}
-
+	/**
+	 * Récupère les mots enregistrer dans le fichier textuelle et les place
+	 * dans une liste
+	 */
 	public void addText(){
 		String line;
 		try {
@@ -90,7 +100,12 @@ public class Search {
 			System.err.println(e.getMessage());
 		}
 	}
-
+	/**
+	 * Parcours la liste de tout les mots du site afin d'obtenir le mot 
+	 * ayant la plus hautre occurence
+	 * @return le mot le plus récurrent
+	 * @throws NoElementListException
+	 */
 	public Word getCurrentWord() throws NoElementListException {
 		Word motRecurrent = null;
 		ArrayList<Word> words;
@@ -106,7 +121,9 @@ public class Search {
 		
 		return motRecurrent;
 	}
-
+	/**
+	 * va permettre de supprimer la liste des mots rencontrés
+	 */
 	public void erase() {
 		try {
 			getWords().clear();

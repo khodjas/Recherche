@@ -88,7 +88,9 @@ class Interface extends JFrame {
 
 	public void init() {
 
-//		spider.recursiveSearch();
+		
+		spider.recursiveSearch();
+			
 		searchSite = new SearchSite();
 		frameResult.setSize(600, 500);
 		this.setSize(500, 100);
