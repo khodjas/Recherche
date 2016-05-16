@@ -1,3 +1,5 @@
-recherche rechercher rechercha recherches recherchant
-programmer programmation programmant programme
-ufr université cergy etudes licences formation etudiant etudiants
+recherche,rechercher rechercha recherches recherchant,,.
+programmer,programmation programmant programme,informatique java c c++,.
+université,univ universités,ufr cergy etudes licences formation etudiant etudiants,.
+voiture,,formule1 course renault peugeot fiat,.
+video,videos videothèque visuel,youtube regarder regarda regardant voir film chaîne,.

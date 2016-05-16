@@ -1,3 +1,7 @@
 http://google.com/
 http://java.com/
 http://openclassrooms.com/
+http://youtube.com/
+https://www.u-cergy.fr/fr/index.html
+http://www.jeuxvideo.com/
+http://www.lemonde.fr/

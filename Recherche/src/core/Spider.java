@@ -23,25 +23,35 @@ import data.Site;
 import data.ValidException;
 import data.Word;
 import log.LoggerUtility;
-
+/**
+ * 
+ * Classe concernant le parcours des sites
+ *
+ */
 public class Spider {
 
 	private static final int MAX_PAGES_TO_SEARCH = 20;
 	private static final String FILENAME_LIST_SITES="sites.txt";
 	private static final String FILENAME_TEST_SITES= "testSite.txt";
 	private static final String FILENAME_INDEX = "fichier.ser";
-	private Set<String> pagesVisited = new HashSet<String>();
-	private List<String> pagesToVisit = new LinkedList<String>();
+	private Set<String> pagesVisited ;
+	private List<String> pagesToVisit;
 	private Search recherche;
 	private CreateIndex index;
 
-	private static Logger logger = LoggerUtility.getLogger(Spider.class);
+	private static Logger logger =LoggerUtility.getLogger(Spider.class);
 
 	public Spider() {
 		recherche = new Search("testSite.txt");
 		index = new CreateIndex();
+		pagesVisited= new HashSet<String>();
+		pagesToVisit= new LinkedList<String>();
 	}
-
+/**
+ * va sauvegarder tout les éléments de la page web dans un fichier
+ * @param list
+ * @throws IOException
+ */
 	public void save(String[] list) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME_TEST_SITES));
 		for (int index = 0; index < list.length; index++) {
@@ -50,16 +60,21 @@ public class Spider {
 		}
 		writer.close();
 	}
-
+/**
+ * supprime le fichier des informations du site une fois utilisé
+ */
 	public void eraseFile() {
 		File file = new File(FILENAME_TEST_SITES);
 		file.delete();
 
 	}
-
+/**
+ * méthode qui recherche plusieurs sites depuis la base de données
+ */
 	public void recursiveSearch() {
 		if (!(new File(FILENAME_INDEX).exists())) {
 			index.addDictonnary("dictionnaire.txt");
+		}
 			try {
 				String line;
 				BufferedReader bReader = new BufferedReader(new FileReader(FILENAME_LIST_SITES));
@@ -75,7 +90,7 @@ public class Spider {
 				// TODO Auto-generated catch block
 				System.err.println(e.getMessage());
 			}
-		}
+		
 	}
 
 	//
@@ -157,6 +172,13 @@ public class Spider {
 		return nextUrl;
 	}
 
+	/**
+	 * indexe le site avec son mot correspondant
+	 * 
+	 * @param currentUrl 
+	 * @throws NoElementListException
+	 * @throws ValidException
+	 */
 	public void indexation(String currentUrl) throws NoElementListException, ValidException {
 		Word currentWord = recherche.getCurrentWord();
 		CreateDescriptor uniqDescriptor = new CreateDescriptor(currentWord);
@@ -164,10 +186,5 @@ public class Spider {
 		logger.info("Mot récurrent du site: " + currentWord);
 		uniqDescriptor.addSite(site);
 		index.inserDescriptor(uniqDescriptor);
-	}
-
-	public static void main(String[] args) {
-		Spider spider = new Spider();
-		spider.search("http://google.com/");
 	}
 }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  */
 public class Interdit {
-	private String FILE_NAME="restriction.txt";
+	private static String FILE_NAME="restriction.txt";
 	private ArrayList<String> strings;
 	private File file;
 	
@@ -58,12 +58,12 @@ public class Interdit {
 			value=value.replace(string, "");
 			
 		}
-		
+		/*
 		String[] accentedE={"é","è","ê","ë"};
 		String[] accentedA={"à"};
 		String[] accentedI={"ï","ì"};
 		String[] accentedU={};
-		
+		*/
 		return value;
 	}
 	/**

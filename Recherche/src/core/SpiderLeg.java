@@ -16,12 +16,12 @@ import log.LoggerUtility;
 
 public class SpiderLeg {
 	
-	String userAgent="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
+	//String userAgent="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36";
 	private List<String> links = new LinkedList<String>();
 	private Document htmlDocument;
 	
-	private static Logger logger = LoggerUtility.getLogger(SpiderLeg.class);
+	private static Logger logger =  LoggerUtility.getLogger(SpiderLeg.class);
 	/**
 	 * 
 	 * @param url
@@ -45,7 +45,6 @@ public class SpiderLeg {
 
 			Elements linksOnPage = htmlDocument.select("a[href]");
 			logger.info(" urls interne trouvé : "+linksOnPage.size()+" ");
-//			System.out.println("Found (" + linksOnPage.size() + ") links");
 
 			for (Element link : linksOnPage) {
 				this.links.add(link.absUrl("href"));
@@ -53,7 +52,6 @@ public class SpiderLeg {
 			return true;
 		}catch(IllegalArgumentException iae){
 			logger.error("url:"+url+" non valide");
-//			System.err.println(iae.getMessage()+"url non valide");
 			return false;
 		}
 		catch (IOException ioe) {

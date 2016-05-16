@@ -92,7 +92,7 @@ public class CreateIndex extends Index {
 			String value;
 			CreateDescriptor descriptor;
 			while ((value = reader.readLine()) != null) {
-				buffer = value.split(" ");
+				buffer = value.split(",");
 				SemanticWord word = new SemanticWord(buffer[0]);
 				if (!(buffer[1].equals(""))) {
 					String[] family = buffer[1].split(" ");

@@ -28,11 +28,15 @@ import org.apache.log4j.Logger;
 import core.SearchSite;
 import core.Spider;
 import log.LoggerUtility;
-
+/**
+ * 
+ * Interface graphique du logiciel
+ *
+ */
 class Interface extends JFrame {
 	private SearchSite searchSite;
 	private Spider spider;
-	private static final File file = new File("sites.txt");
+	private static final File INDEX_FILE = new File("fichier.ser");
 
 	private JLabel rechercheMot = new JLabel("requête");
 	private JTextField champMot = new JTextField();
@@ -79,7 +83,9 @@ class Interface extends JFrame {
 		String list="le nombre de page résultant est "+sites.size()+"<br />";
 		logger.info("nombre de page:"+sites.size());
 		for(String site:sites){
-			
+			if(site.contains("?")){
+				site=site.substring(0, site.indexOf("?"));
+			}
 		 list+=("<a href= \""+site+"\">"+site+"</a>");
 		 list+="<br /><br />";
 		}
@@ -88,9 +94,10 @@ class Interface extends JFrame {
 
 	public void init() {
 
+		if(!INDEX_FILE.exists()){
+			spider.recursiveSearch();
+		}
 		
-		spider.recursiveSearch();
-			
 		searchSite = new SearchSite();
 		frameResult.setSize(600, 500);
 		this.setSize(500, 100);
