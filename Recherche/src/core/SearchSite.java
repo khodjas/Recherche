@@ -8,7 +8,10 @@ import data.Descriptor;
 import data.Index;
 import data.Site;
 import log.LoggerUtility;
-
+/**
+ * Classe qui sert à la recherche des résultats
+ *
+ */
 public class SearchSite {
 	private final String fileName = "fichier.ser";
 	private ArrayList<String> result;
@@ -67,7 +70,11 @@ public class SearchSite {
 		return siteTriee;
 
 	}
-
+/**
+ * va récupérer les sites correspondant à la requête
+ * @param request la requête de la recherche
+ * @throws NullPointerException
+ */
 	public void search(String request) throws NullPointerException {
 		if (!getResult().isEmpty()) {
 			setResult(new ArrayList<String>());

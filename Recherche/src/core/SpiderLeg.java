@@ -23,7 +23,8 @@ public class SpiderLeg {
 	
 	private static Logger logger =  LoggerUtility.getLogger(SpiderLeg.class);
 	/**
-	 * 
+	 * permet de vérifier si le site éxiste et est valide et va permettre de
+	 * récupérer les sites interne 
 	 * @param url
 	 */
 	public boolean crawl(String url) throws CrawlException{
@@ -62,7 +63,7 @@ public class SpiderLeg {
 	}
 
 	/**
-	 * 
+	 * permet de récupérer le texte appartenant au body en minuscule
 	 * @param searchWord
 	 * @return
 	 */
